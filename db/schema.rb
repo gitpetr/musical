@@ -10,18 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180404035250) do
+ActiveRecord::Schema.define(version: 20180411025012) do
 
   create_table "artists", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_artists_on_name"
   end
 
   create_table "downloads", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "song_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["created_at", "song_id"], name: "index_downloads_on_created_at_and_song_id"
     t.index ["song_id"], name: "index_downloads_on_song_id"
   end
 
@@ -33,6 +35,8 @@ ActiveRecord::Schema.define(version: 20180404035250) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["artist_id"], name: "index_songs_on_artist_id"
+    t.index ["created_at", "artist_id"], name: "index_songs_on_created_at_and_artist_id"
+    t.index ["title"], name: "index_songs_on_title"
   end
 
   add_foreign_key "downloads", "songs"
